@@ -1,0 +1,35 @@
+{
+  "name": "kavak-server-generator",
+  "version": "1.0.0",
+  "description": "Server generator with typescript express and typeorm build by edxz7c (kavak)",
+  "bin": {
+    "kserver": "bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edxz7/server-generator.git"
+  },
+  "keywords": [
+    "backend",
+    "typescript",
+    "node",
+    "express",
+    "postgresql",
+    "typeorm"
+  ],
+  "author": "edxz7c <edxz7c@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edxz7c/generator/issues"
+  },
+  "homepage": "https://github.com/edxz7c/generator#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "inquirer": "^7.0.0",
+    "shelljs": "^0.8.3"
+  },
+  "preferGlobal": true
+}

@@ -1,0 +1,35 @@
+{
+  "name": "kavak-ts-express-generator",
+  "version": "0.0.0",
+  "description": "cli express generator with express, typescript and typeorm",
+  "scripts": {
+    "start": "node ./dist/bin/www",
+    "dev": "DEBUG=server:* tsc-watch --onSuccess \"nodemon ./dist/bin/www\" ",
+    "dev-windows": "tsc-watch --onSuccess nodemon \" ./dist/bin/www\" "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "hbs": "^4.1.1",
+    "morgan": "^1.10.0",
+    "node-sass-middleware": "^0.11.0",
+    "path": "^0.12.7",
+    "pg": "^8.2.1",
+    "reflect-metadata": "^0.1.13",
+    "serve-favicon": "^2.5.0",
+    "typeorm": "^0.2.24"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node": "^14.0.1",
+    "@types/node-sass-middleware": "0.0.31",
+    "@types/pg": "^7.14.3",
+    "@types/serve-favicon": "^2.5.0",
+    "tsc-watch": "^4.2.5",
+    "typescript": "^3.9.2"
+  }
+}
