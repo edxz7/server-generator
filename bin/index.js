@@ -33,8 +33,6 @@ inquirer.prompt(QUESTIONS).then((answers) => {
   const targetPath = `${CURR_DIR}/${projectName}`;
   if (!createProject(targetPath)) return;
   createDirectoryContents(templatePath, projectName);
-  postProcess(`${targetPath}/backend`);
-  postProcess(`${targetPath}/frontend`);
   showMessage(projectName);
 });
 
@@ -66,12 +64,7 @@ function createDirectoryContents(templatePath, newProjectPath) {
 
 function postProcess(targetPath) {
   shell.cd(targetPath);
-  let cmd = '';
-  if (String(targetPath).includes('backend')) {
-    cmd = 'npm install';
-  } else if (String(targetPath).includes('frontend')) {
-    cmd = 'yarn';
-  }
+  let cmd = 'npm install';
   if (cmd) {
     const result = shell.exec(cmd);
     if (result.code !== 0) {
@@ -89,11 +82,8 @@ function showMessage(projectName) {
   console.log(chalk.magenta('Go into the project:'));
   console.log(chalk.magenta.bold(`cd ${projectName}`));
   console.log('');
-  console.log(chalk.green('Run the backend with:'));
+  console.log(chalk.green('Run the server with:'));
   console.log(chalk.green.bold('npm run dev'));
-  console.log('');
-  console.log(chalk.blue('Run the frontend with:'));
-  console.log(chalk.blue.bold('yarn start'));
   console.log('');
   console.log(chalk.bold('Happy Coding ❤️'));
 }

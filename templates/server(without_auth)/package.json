@@ -4,8 +4,8 @@
   "description": "cli express generator with express, typescript and typeorm",
   "scripts": {
     "start": "node ./dist/bin/www",
-    "dev": "DEBUG=server:* tsc-watch --onSuccess \"nodemon ./dist/bin/www\" ",
-    "dev-windows": "tsc-watch --onSuccess nodemon \" ./dist/bin/www\" "
+    "dev": "DEBUG=server:* tsc-watch --onSuccess \"node ./dist/bin/www\" ",
+    "dev-windows": "tsc-watch --onSuccess node \" ./dist/bin/www\" "
   },
   "keywords": [],
   "author": "",
