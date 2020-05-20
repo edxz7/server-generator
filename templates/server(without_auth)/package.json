@@ -4,14 +4,13 @@
   "description": "cli express generator with express, typescript and typeorm",
   "scripts": {
     "start": "node ./dist/bin/www",
-    "dev": "DEBUG=server:* tsc-watch --onSuccess \"node ./dist/bin/www\" ",
-    "dev-windows": "tsc-watch --onSuccess node \" ./dist/bin/www\" "
+    "dev": "DEBUG=server:* tsc-watch --onSuccess \"nodemon ./dist/bin/www\" ",
+    "dev-windows": "tsc-watch --onSuccess nodemon \" ./dist/bin/www\" "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "hbs": "^4.1.1",

@@ -1,5 +1,5 @@
 {
-  "name": "kavak-server-generator",
+  "name": "kavak-ts-server-generator",
   "version": "1.0.0",
   "description": "Server generator with typescript express and typeorm build by edxz7c (kavak)",
   "bin": {
