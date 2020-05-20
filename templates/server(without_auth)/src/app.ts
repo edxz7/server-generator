@@ -3,7 +3,6 @@ require('dotenv').config();
 
 import 'reflect-metadata'
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
 import express from 'express';
 import favicon from 'serve-favicon';
 import hbs from 'hbs';
