@@ -42,13 +42,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 require("reflect-metadata");
-var body_parser_1 = __importDefault(require("body-parser"));
 var express_1 = __importDefault(require("express"));
 var serve_favicon_1 = __importDefault(require("serve-favicon"));
+var hbs_1 = __importDefault(require("hbs"));
 var morgan_1 = __importDefault(require("morgan"));
 var path_1 = __importDefault(require("path"));
 var typeorm_1 = require("typeorm");
-var index_1 = __importDefault(require("./routes/index"));
+var index_routes_1 = __importDefault(require("./routes/index.routes"));
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function () {
         var app_name, debug, connection, app;
@@ -70,8 +70,8 @@ function bootstrap() {
                     app = express_1.default();
                     // Middleware Setup
                     app.use(morgan_1.default('dev'));
-                    app.use(body_parser_1.default.json());
-                    app.use(body_parser_1.default.urlencoded({ extended: false }));
+                    app.use(express_1.default.json());
+                    app.use(express_1.default.urlencoded({ extended: false }));
                     // Express View engine setup
                     app.use(require('node-sass-middleware')({
                         src: path_1.default.join(__dirname, 'public'),
@@ -80,11 +80,12 @@ function bootstrap() {
                     }));
                     app.set('views', path_1.default.join(__dirname, 'views'));
                     app.set('view engine', 'hbs');
+                    hbs_1.default.registerPartials(path_1.default.join(__dirname, 'views/partials'));
                     app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
                     app.use(serve_favicon_1.default(path_1.default.join(__dirname, 'public', 'images', 'favicon.ico')));
                     // default value for title local
                     app.locals.title = 'Express - Generated with kavak typescript generator';
-                    app.use('/', index_1.default);
+                    app.use('/', index_routes_1.default);
                     return [2 /*return*/, app];
             }
         });
