@@ -59,8 +59,8 @@ function bootstrap() {
                     debug = require('debug')(app_name + ":" + path_1.default.basename(__filename).split('.')[0]);
                     return [4 /*yield*/, typeorm_1.createConnection({
                             type: "postgres",
-                            url: "postgres://postgres:password@localhost:5432/" + process.env.DB,
-                            entities: [path_1.default.join(__dirname, './entities/*.{ts,js}')],
+                            url: "postgres://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@localhost:5432/" + process.env.DB,
+                            entities: [path_1.default.join(__dirname, './entities/**/*.{ts,js}')],
                             synchronize: true
                         })];
                 case 1:

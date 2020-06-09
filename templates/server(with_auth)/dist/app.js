@@ -48,7 +48,13 @@ var hbs_1 = __importDefault(require("hbs"));
 var morgan_1 = __importDefault(require("morgan"));
 var path_1 = __importDefault(require("path"));
 var typeorm_1 = require("typeorm");
+var express_session_1 = __importDefault(require("express-session"));
+var passport_config_1 = __importDefault(require("./config/passport.config"));
+var connect_flash_1 = __importDefault(require("connect-flash"));
+var out_1 = require("connect-typeorm/out");
+var Session_entity_1 = require("./entities/Session.entity");
 var index_routes_1 = __importDefault(require("./routes/index.routes"));
+var auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function () {
         var app_name, debug, connection, app;
@@ -59,8 +65,12 @@ function bootstrap() {
                     debug = require('debug')(app_name + ":" + path_1.default.basename(__filename).split('.')[0]);
                     return [4 /*yield*/, typeorm_1.createConnection({
                             type: "postgres",
-                            url: "postgres://postgres:password@localhost:5432/" + process.env.DB,
-                            entities: [path_1.default.join(__dirname, './entities/*.{ts,js}')],
+                            url: "postgres://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@localhost:5432/" + process.env.DB,
+                            entities: [path_1.default.join(__dirname, './entities/**/*.{ts,js}')],
+                            migrations: [path_1.default.join(__dirname, './migrations/**/*.{ts,js}')],
+                            cli: {
+                                "migrationsDir": "migrations"
+                            },
                             synchronize: true
                         })];
                 case 1:
@@ -83,9 +93,26 @@ function bootstrap() {
                     hbs_1.default.registerPartials(path_1.default.join(__dirname, 'views/partials'));
                     app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
                     app.use(serve_favicon_1.default(path_1.default.join(__dirname, 'public', 'images', 'favicon.ico')));
+                    // Configure express-session
+                    app.use(express_session_1.default({
+                        secret: process.env.SECRET,
+                        resave: true,
+                        saveUninitialized: true,
+                        cookie: { maxAge: 1000 * 60 * 60 * 24 },
+                        store: new out_1.TypeormStore({
+                            cleanupLimit: 2,
+                            limitSubquery: false,
+                            ttl: 86400
+                        }).connect(connection.getRepository(Session_entity_1.Session))
+                    }));
+                    // passport
+                    app.use(connect_flash_1.default());
+                    app.use(passport_config_1.default.initialize());
+                    app.use(passport_config_1.default.session());
                     // default value for title local
                     app.locals.title = 'Express - Generated with kavak typescript generator';
                     app.use('/', index_routes_1.default);
+                    app.use('/', auth_routes_1.default);
                     return [2 /*return*/, app];
             }
         });

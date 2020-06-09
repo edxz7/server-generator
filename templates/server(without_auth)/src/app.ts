@@ -20,10 +20,6 @@ async function bootstrap() {
     type: "postgres",
     url: `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@localhost:5432/${process.env.DB}`,
     entities: [path.join(__dirname, './entities/**/*.{ts,js}') ],
-    migrations: [path.join(__dirname, './migrations/**/*.{ts,js}') ],
-    cli: {
-        "migrationsDir": "migrations"
-    },
     synchronize: true
   });
   // display DB info
