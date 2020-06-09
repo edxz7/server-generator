@@ -9,7 +9,14 @@ import logger from 'morgan';
 import path from 'path';
 import { createConnection } from 'typeorm';
 
-import index from './routes/index.routes';
+import ExpressSession from 'express-session';
+import passport from './config/passport.config';
+import flash from 'connect-flash';
+import { TypeormStore } from 'connect-typeorm/out';
+import { Session } from './entities/Session.entity';
+
+import indexRoutes from './routes/index.routes';
+import authRoutes from './routes/auth.routes';
 
 async function bootstrap() {
   const app_name = require('../package.json').name;
@@ -44,17 +51,36 @@ async function bootstrap() {
     sourceMap: true
   }));
         
-
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'hbs');
   hbs.registerPartials( path.join(__dirname, 'views/partials' ) )
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
+
+  // Configure express-session
+  app.use(ExpressSession({
+    secret: process.env.SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    store: new TypeormStore({
+      cleanupLimit: 2,
+      limitSubquery: false,
+      ttl: 86400 
+    }).connect(connection.getRepository(Session)) 
+  }));
+
+  // passport
+  app.use(flash());
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   // default value for title local
   app.locals.title = 'Express - Generated with kavak typescript generator';
 
-  app.use('/', index);
+  app.use('/', indexRoutes);
+  app.use('/', authRoutes);
 
   return app;
 }
